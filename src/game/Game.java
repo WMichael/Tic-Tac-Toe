@@ -37,7 +37,7 @@ public class Game {
 		return this.currentTurn;
 	}
 	
-	public void displayBoard() {
+	public void displayBoard() { // Only used for debugging.
 		System.out.println(" ");
 		for (int i=0; i< board.length; i++) {
 			System.out.println(board[i][0] + " " + board[i][1] + " " + board[i][2]);
@@ -57,7 +57,6 @@ public class Game {
 		}
 		
 		this.noOfTilesUsed++;
-		displayBoard(); // Used for debugging.
 		
 		//Check if current turn wins the game. 
 		int n = 3;
@@ -74,8 +73,7 @@ public class Game {
         for(int i = 0; i < n; i++){
             if(board[i][row] != board[col][row])
                 break;
-            if(i == n-1){
-                System.out.println("Win");
+            if(i == n-1){              
                 isWon = true;
             }
         }
@@ -85,7 +83,6 @@ public class Game {
 	        	if(board[i][i] != board[col][row])
 	        		break;
 		        if(i == n-1) {
-		        	System.out.println("Win");
 		        	isWon = true;
 		        }
         	
@@ -97,7 +94,6 @@ public class Game {
         		if(board[i][(n-1)-i] != board[col][row])
         			break;
                 if(i == n-1){
-                	System.out.println("Win");
                 	isWon = true;
                 }
             }
@@ -118,24 +114,23 @@ public class Game {
     		if(this.noOfTilesUsed == 9) {
     			this.draws++;
     			result = "draw";
-    			System.out.println("Draw has happened.");
+    			//System.out.println("Draw has happened.");
     		}
     		else {
 	    		if (currentPlayer == true) {
 	    			this.xWins++;
 	    			result = "xWin";
-	    		System.out.println("X win has happened.");
+	    		//System.out.println("X win has happened.");
 	    		}
 	    		else {
 	    			this.oWins++;
 	    			result = "oWin";
-	    		System.out.println("O Win has happened.");
+	    		//System.out.println("O Win has happened.");
 	    		}
 	    		
     		}
     		this.noOfTilesUsed = 0;
     		this.isWon = false;
-    		displayBoard();
         	return result;
         	
         }
@@ -153,6 +148,5 @@ public class Game {
 		this.currentTurn = true;
 		char[][] newBoard = {{'_','_','_'},{'_','_','_'},{'_','_','_'}};
 		board = newBoard; 
-		displayBoard();
 	}
 }
