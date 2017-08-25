@@ -133,7 +133,8 @@ public class Gui {
 		frmTicTacToe.getContentPane().add(lblCurrentTurn);
 		
 		// Adds a mouse listener for each label on the board.
-		JLabel[][] labelArray = {{lbl11,lbl12,lbl13},{lbl21,lbl22,lbl23},{lbl31,lbl32,lbl33}};
+		JLabel[][] labelArray = {{lbl11,lbl12,lbl13},{lbl21,lbl22,lbl23},{lbl31,lbl32,lbl33}}; 
+		Boolean[][] booleanArray = {{true,true,true},{true,true,true},{true,true,true}}; //Array used to determine whether a tile can be pressed.
 		for(int i=0; i< labelArray.length; i++) {
 			for(int y=0; y< labelArray.length; y++) {
 				JLabel label = labelArray[i][y];
@@ -142,8 +143,11 @@ public class Gui {
 				label.addMouseListener(new MouseAdapter() {
 					@Override
 					public void mouseClicked(MouseEvent arg0) {
-						turnTaken(labelArray, label,col,row);
-						//label.removeMouseListener(this); - Bug when removing mouse listeners and then adding them, number of tiles increases differently.
+						if(booleanArray[col][row]) {
+							booleanArray[col][row] = false; // Tile is set to false after being pressed.
+							turnTaken(labelArray,booleanArray,label,col,row); // Turn is registered.
+						}
+						
 					}
 				});
 			}
@@ -153,7 +157,7 @@ public class Gui {
 		JButton btnResetGame = new JButton("New Game");
 		btnResetGame.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
-				reset(labelArray);
+				reset(labelArray,booleanArray);
 			}
 		});
 		btnResetGame.setBounds(409, 407, 145, 44);
@@ -182,8 +186,8 @@ public class Gui {
 	
 	
 	//Game related methods 
-	
-	private void turnTaken(JLabel[][] labelArray, JLabel label,int col, int row) {
+	// turnTaken after each tile press.
+	private void turnTaken(JLabel[][] labelArray,Boolean[][] booleanArray, JLabel label,int col, int row) {
 		// Change Icon to either X or O 
 		if (game.getCurrentTurn() == true) {
 			label.setIcon(new ImageIcon(imgX));
@@ -214,6 +218,14 @@ public class Gui {
 						labelArray[i][y].setIcon(null);	
 					}
 				}
+				
+				// Reset boolean array to true.
+				for(int i=0; i< booleanArray.length; i++) {
+					for (int y=0; y< booleanArray.length; y++) {
+						booleanArray[i][y] = true;
+					}
+				}
+				
 			
 			
 			}
@@ -228,12 +240,19 @@ public class Gui {
 	
 
 	// Reset game state and board
-	private void reset(JLabel[][] labelArray) {
+	private void reset(JLabel[][] labelArray, Boolean[][] booleanArray) {
 
 		// Clear Board
 		for(int i=0; i< labelArray.length; i++) {
 			for (int y=0; y< labelArray.length; y++) {
 				labelArray[i][y].setIcon(null);	
+			}
+		}
+		
+		// Reset boolean array to true.
+		for(int i=0; i< booleanArray.length; i++) {
+			for (int y=0; y< booleanArray.length; y++) {
+				booleanArray[i][y] = true;
 			}
 		}
 		
