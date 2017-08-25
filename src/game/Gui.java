@@ -17,6 +17,7 @@ import java.awt.event.MouseListener;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Toolkit;
 
 public class Gui {
 
@@ -59,6 +60,7 @@ public class Gui {
 	private void initialize() {
 
 		frmTicTacToe = new JFrame();
+		frmTicTacToe.setIconImage(Toolkit.getDefaultToolkit().getImage(Gui.class.getResource("/img/tictactoeIcon.png")));
 		frmTicTacToe.setTitle("Tic Tac Toe");
 		frmTicTacToe.setResizable(false);
 		frmTicTacToe.setBounds(100, 100, 834, 550);
